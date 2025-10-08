@@ -9,23 +9,23 @@ public struct NBProgressViewStyle: ProgressViewStyle {
 
     public func makeBody(configuration: Configuration) -> some View {
         let value = configuration.fractionCompleted ?? 0.0
-        HStack(spacing: 0) {
-            Text(value, format: .percent.precision(.fractionLength(0)))
-                .padding(.horizontal)
-                .frame(width: 100)
+        HStack(spacing: theme.spacing) {
+            if let label = configuration.label {
+                label
+            }
             GeometryReader { geometry in
                 HStack(spacing: 0) {
                     // Progress bar
                     Rectangle()
                         .fill(theme.main)
                         .frame(width: value * geometry.size.width, height: theme.size)
-                    
+
                     if value > 0.001 && value < 0.99 {
                         Divider()
                             .frame(width: theme.borderWidth, height: geometry.size.height)
                             .background(Color.black)
                     }
-                    
+
                     // Background bar
                     Rectangle()
                         .fill(theme.bw)
@@ -42,7 +42,7 @@ public struct NBProgressViewStyle: ProgressViewStyle {
 @available(iOS 18.0, *)
 #Preview(traits: .modifier(NBPreviewHelper())) {
     VStack {
-        ProgressView(value: 0.0)
+        ProgressView(value: 0.0) { Text("Some Task") }
             .progressViewStyle(.neoBrutalism)
 
         ProgressView(value: 0.52)
