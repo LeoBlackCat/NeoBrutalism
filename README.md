@@ -114,6 +114,29 @@ HStack(spacing: 20) {
 }
 ```
 
+### Toast
+<p float="left">
+    <!-- Insert Toast screenshot here -->
+    <img width="350" alt="Toast Component" src="placeholder_toast.png" loading="lazy" />
+</p>
+
+```swift
+// 1. Create a Manager
+@StateObject var toastManager = NBToastManager()
+
+// 2. Attach Modifier to Root View
+.nbToast(manager: toastManager)
+
+// 3. Trigger Toast
+Button("Show Toast") {
+    toastManager.show(
+        title: "Success",
+        message: "Action completed!",
+        type: .success
+    )
+}
+```
+
 ### Checkbox
 <p float="left">
     <img width="350" alt="image" src="https://github.com/user-attachments/assets/0239f56e-c375-4e3b-9c04-05788350e266" loading="lazy" />

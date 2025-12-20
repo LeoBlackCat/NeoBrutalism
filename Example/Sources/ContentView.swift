@@ -364,9 +364,33 @@ struct AvatarExampleView: View {
     }
 }
 
+struct ToastExampleView: View {
+    @ObservedObject var toastManager: NBToastManager
+    
+    var body: some View {
+        VStack(spacing: 12) {
+            Button("Show Info Toast") {
+                toastManager.show(title: "Did you know?", message: "Neo-brutalism is awesome!")
+            }
+            .buttonStyle(.neoBrutalism())
+            
+            Button("Show Success Toast") {
+                toastManager.show(title: "Success", message: "Task completed successfully.", type: .success)
+            }
+            .buttonStyle(.neoBrutalism(type: .neutral))
+            
+            Button("Show Error Toast") {
+                toastManager.show(title: "Error", message: "Something went wrong.", type: .error)
+            }
+            .buttonStyle(.neoBrutalism(variant: .reverse))
+        }
+    }
+}
+
 struct ContentView: View {
     @State var colorSceme: ColorScheme = .light
     @State var theme: NBTheme = .red
+    @StateObject var toastManager = NBToastManager()
     
     let themes: [ThemeOption] = [
         ThemeOption(name: "Red", theme: .red),
@@ -392,6 +416,7 @@ struct ContentView: View {
         let exampleViews: [AnyView] = [
             AnyView(AccordionExampleView()),
             AnyView(AvatarExampleView()),
+            AnyView(ToastExampleView(toastManager: toastManager)),
             AnyView(CheckboxExampleView()),
             AnyView(SwitchExampleView()),
             AnyView(AlertExampleView()),
@@ -460,6 +485,7 @@ struct ContentView: View {
                 }.padding(theme.padding)
             }
         }
+        .nbToast(manager: toastManager)
         .nbTheme(theme)
         .colorScheme(colorSceme)
         .animation(.default, value: theme.main)
