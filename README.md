@@ -51,10 +51,32 @@ struct ContentView: View {
 
 ## Styling
 
-NeoBrutalism supports theming, with both light and dark mode options. You can customize or create your own themes. To apply a theme to a view, use the `nbTheme()` modifier.
+NeoBrutalism comes with **17 built-in color presets** (Red, Orange, Amber, Yellow, Lime, Green, Emerald, Teal, Cyan, Sky, Blue, Indigo, Violet, Purple, Fuchsia, Pink, Rose), along with full support for light and dark modes.
+
+You can use a preset directly:
 
 ```swift
 struct ContentView: View {
+    // Use one of the 17 presets, e.g., .orange, .teal, .violet
+    var theme: NBTheme = .orange
+
+    var body: some View {
+        ZStack {
+            theme.background
+                .ignoresSafeArea()
+            Toggle(isOn: .constant(true)) { Text("Are you a wizard?") }
+                .toggleStyle(.neoBrutalismChecklist)
+        }
+        .nbTheme(theme)
+    }
+}
+```
+
+Or fully customize it:
+
+```swift
+struct ContentView: View {
+    // Custom overrides
     var theme = NBTheme.default.updateBy(background: .black, mainText: .white)
 
     var body: some View {
