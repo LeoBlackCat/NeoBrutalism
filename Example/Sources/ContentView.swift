@@ -387,10 +387,36 @@ struct ToastExampleView: View {
     }
 }
 
+struct SheetExampleView: View {
+    @Binding var showSheet: Bool
+    @Binding var side: NBSheetSide
+    
+    var body: some View {
+        VStack(spacing: 12) {
+            HStack {
+                Button("Left Sheet") { side = .left; withAnimation { showSheet = true } }
+                    .buttonStyle(.neoBrutalism())
+                Button("Right Sheet") { side = .right; withAnimation { showSheet = true } }
+                    .buttonStyle(.neoBrutalism())
+            }
+            HStack {
+                Button("Top Sheet") { side = .top; withAnimation { showSheet = true } }
+                    .buttonStyle(.neoBrutalism())
+                Button("Bottom Sheet") { side = .bottom; withAnimation { showSheet = true } }
+                    .buttonStyle(.neoBrutalism())
+            }
+        }
+    }
+}
+
 struct ContentView: View {
     @State var colorSceme: ColorScheme = .light
     @State var theme: NBTheme = .red
     @StateObject var toastManager = NBToastManager()
+    
+    // Sheet State
+    @State var showSheet = false
+    @State var sheetSide: NBSheetSide = .right
     
     let themes: [ThemeOption] = [
         ThemeOption(name: "Red", theme: .red),
@@ -417,6 +443,7 @@ struct ContentView: View {
             AnyView(AccordionExampleView()),
             AnyView(AvatarExampleView()),
             AnyView(ToastExampleView(toastManager: toastManager)),
+            AnyView(SheetExampleView(showSheet: $showSheet, side: $sheetSide)),
             AnyView(CheckboxExampleView()),
             AnyView(SwitchExampleView()),
             AnyView(AlertExampleView()),
@@ -484,6 +511,24 @@ struct ContentView: View {
                     }
                 }.padding(theme.padding)
             }
+        }
+        .nbSheet(isPresented: $showSheet, side: sheetSide) {
+            VStack(alignment: .leading, spacing: 20) {
+                Text("Edit Profile")
+                    .font(.title2)
+                    .bold()
+                
+                Text("Make changes to your profile here. Click save when you're done.")
+                
+                Button("Save Changes") {
+                    withAnimation { showSheet = false }
+                }
+                .buttonStyle(.neoBrutalism())
+                .padding(.top)
+                
+                Spacer()
+            }
+            .padding()
         }
         .nbToast(manager: toastManager)
         .nbTheme(theme)

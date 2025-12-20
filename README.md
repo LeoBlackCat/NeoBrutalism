@@ -137,6 +137,27 @@ Button("Show Toast") {
 }
 ```
 
+### Sheet
+<p float="left">
+    <!-- Insert Sheet screenshot here -->
+    <img width="350" alt="Sheet Component" src="placeholder_sheet.png" loading="lazy" />
+</p>
+
+```swift
+@State var showSheet = false
+@State var side: NBSheetSide = .right
+
+ZStack {
+    // Content
+}
+.nbSheet(isPresented: $showSheet, side: side) {
+    VStack {
+        Text("Sheet Content")
+        Button("Close") { showSheet = false }
+    }
+}
+```
+
 ### Checkbox
 <p float="left">
     <img width="350" alt="image" src="https://github.com/user-attachments/assets/0239f56e-c375-4e3b-9c04-05788350e266" loading="lazy" />
