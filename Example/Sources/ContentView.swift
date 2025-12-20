@@ -349,6 +349,21 @@ struct FlatCardExampleView: View {
     }
 }
 
+struct AvatarExampleView: View {
+    var body: some View {
+        HStack(spacing: 20) {
+            // Image Asset (System)
+            NBAvatar(image: Image(systemName: "person.fill"), fallback: "NB")
+            
+            // URL
+            NBAvatar(url: URL(string: "https://github.com/shadcn.png"), fallback: "CN")
+            
+            // Fallback
+            NBAvatar(fallback: "JD")
+        }
+    }
+}
+
 struct ContentView: View {
     @State var colorSceme: ColorScheme = .light
     @State var theme: NBTheme = .red
@@ -376,6 +391,7 @@ struct ContentView: View {
     var body: some View {
         let exampleViews: [AnyView] = [
             AnyView(AccordionExampleView()),
+            AnyView(AvatarExampleView()),
             AnyView(CheckboxExampleView()),
             AnyView(SwitchExampleView()),
             AnyView(AlertExampleView()),

@@ -95,6 +95,25 @@ struct ContentView: View {
 NeoBrutalism includes commonly used UI components, with plans to expand as needed. Feel free to contribute!
 
 
+### Avatar
+<p float="left">
+    <!-- Insert Avatar screenshot here -->
+    <img width="350" alt="Avatar Component" src="placeholder_avatar.png" loading="lazy" />
+</p>
+
+```swift
+HStack(spacing: 20) {
+    // Image Asset
+    NBAvatar(image: Image(systemName: "person.fill"), fallback: "NB")
+    
+    // URL
+    NBAvatar(url: URL(string: "https://github.com/shadcn.png"), fallback: "CN")
+    
+    // Fallback
+    NBAvatar(fallback: "JD")
+}
+```
+
 ### Checkbox
 <p float="left">
     <img width="350" alt="image" src="https://github.com/user-attachments/assets/0239f56e-c375-4e3b-9c04-05788350e266" loading="lazy" />
