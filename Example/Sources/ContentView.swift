@@ -387,6 +387,21 @@ struct ToastExampleView: View {
     }
 }
 
+struct TextareaExampleView: View {
+    @State var text = ""
+    
+    var body: some View {
+        VStack(spacing: 8) {
+            NBTextarea("Tell me your story...", text: $text)
+                .frame(height: 120)
+            
+            Text("Character count: \(text.count)")
+                .font(.caption)
+                .frame(maxWidth: .infinity, alignment: .trailing)
+        }
+    }
+}
+
 struct DialogExampleView: View {
     @Binding var showDialog: Bool
     
@@ -459,6 +474,7 @@ struct ContentView: View {
             AnyView(ToastExampleView(toastManager: toastManager)),
             AnyView(SheetExampleView(showSheet: $showSheet, side: $sheetSide)),
             AnyView(DialogExampleView(showDialog: $showDialog)),
+            AnyView(TextareaExampleView()),
             AnyView(CheckboxExampleView()),
             AnyView(SwitchExampleView()),
             AnyView(AlertExampleView()),

@@ -298,6 +298,17 @@ TextField("Enter your spell", text: $text)
     .textFieldStyle(.neoBrutalism)
 ```
 
+### Textarea
+<p float="left">
+    <!-- Insert Textarea screenshot here -->
+    <img width="350" alt="Textarea Component" src="placeholder_textarea.png" loading="lazy" />
+</p>
+
+```swift
+NBTextarea("Tell me your story...", text: $text)
+    .frame(height: 120)
+```
+
 ### Progress
 
 <p>
