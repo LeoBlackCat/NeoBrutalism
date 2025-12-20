@@ -298,6 +298,19 @@ TextField("Enter your spell", text: $text)
     .textFieldStyle(.neoBrutalism)
 ```
 
+### Select
+<p float="left">
+    <!-- Insert Select screenshot here -->
+    <img width="350" alt="Select Component" src="placeholder_select.png" loading="lazy" />
+</p>
+
+```swift
+@State var selection = "Apple"
+let options = ["Apple", "Banana", "Orange"]
+
+NBSelect(selection: $selection, options: options)
+```
+
 ### Textarea
 <p float="left">
     <!-- Insert Textarea screenshot here -->
@@ -536,7 +549,23 @@ NBBadge(type: .neutral) {
 }
 ```
 
-### Round Skeleton
+### Marquee
+<p float="left">
+    <!-- Insert Marquee screenshot here -->
+    <img width="350" alt="Marquee Component" src="placeholder_marquee.png" loading="lazy" />
+</p>
+
+```swift
+NBMarquee(speed: 40) {
+    HStack(spacing: 20) {
+        Text("NEO-BRUTALISM")
+        Image(systemName: "star.fill")
+        Text("SWIFTUI")
+    }
+}
+```
+
+### Button
 
 <p>
     <img width="350" alt="image" src="https://github.com/user-attachments/assets/3b031329-fcff-4da5-9755-2d3c59e7d6aa" loading="lazy" />

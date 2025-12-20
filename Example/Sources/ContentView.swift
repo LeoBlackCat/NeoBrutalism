@@ -387,6 +387,43 @@ struct ToastExampleView: View {
     }
 }
 
+struct SelectExampleView: View {
+    @State var selectedHouse = "Gryffindor"
+    let houses = ["Gryffindor", "Slytherin", "Ravenclaw", "Hufflepuff"]
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Choose House:")
+                .font(.headline)
+            NBSelect(selection: $selectedHouse, options: houses)
+                .zIndex(10) // Ensure dropdown floats above subsequent content if we were using overlay, but good practice anyway
+        }
+        .zIndex(10)
+    }
+}
+
+struct MarqueeExampleView: View {
+    var body: some View {
+        NBMarquee(speed: 40) {
+            HStack(spacing: 20) {
+                Text("NEO-BRUTALISM")
+                    .font(.headline)
+                    .bold()
+                Image(systemName: "star.fill")
+                Text("SWIFTUI")
+                    .font(.headline)
+                    .bold()
+                Image(systemName: "circle.fill")
+                Text("IOS 17")
+                    .font(.headline)
+                    .bold()
+                Image(systemName: "square.fill")
+            }
+            .padding(.horizontal)
+        }
+    }
+}
+
 struct TextareaExampleView: View {
     @State var text = ""
     
@@ -471,9 +508,11 @@ struct ContentView: View {
         let exampleViews: [AnyView] = [
             AnyView(AccordionExampleView()),
             AnyView(AvatarExampleView()),
+            AnyView(SelectExampleView()),
             AnyView(ToastExampleView(toastManager: toastManager)),
             AnyView(SheetExampleView(showSheet: $showSheet, side: $sheetSide)),
             AnyView(DialogExampleView(showDialog: $showDialog)),
+            AnyView(MarqueeExampleView()),
             AnyView(TextareaExampleView()),
             AnyView(CheckboxExampleView()),
             AnyView(SwitchExampleView()),
