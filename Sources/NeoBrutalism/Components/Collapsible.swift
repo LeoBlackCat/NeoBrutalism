@@ -1,12 +1,12 @@
 import SwiftUI
 
 extension EnvironmentValues {
-    @Entry var nbCollapsableDidToggle: NBCollapsableDidToggle = {}
-    @Entry var nbCollapsableIsExpanded: Bool = false
+    @Entry var nbCollapsibleDidToggle: NBCollapsibleDidToggle = {}
+    @Entry var nbCollapsibleIsExpanded: Bool = false
 }
 
-public struct NBCollapsableContent<Content>: View where Content: View {
-    @Environment(\.nbCollapsableIsExpanded) var isExpanded
+public struct NBCollapsibleContent<Content>: View where Content: View {
+    @Environment(\.nbCollapsibleIsExpanded) var isExpanded
 
     let content: Content
 
@@ -22,7 +22,7 @@ public struct NBCollapsableContent<Content>: View where Content: View {
 }
 
 public struct NBCollapsibleTrigger<Trigger>: View where Trigger: View {
-    @Environment(\.nbCollapsableDidToggle) var collapsableDidToggle
+    @Environment(\.nbCollapsibleDidToggle) var collapsibleDidToggle
 
     let trigger: Trigger
 
@@ -34,16 +34,16 @@ public struct NBCollapsibleTrigger<Trigger>: View where Trigger: View {
         trigger
             .contentShape(Rectangle())
             .onTapGesture {
-                collapsableDidToggle()
+                collapsibleDidToggle()
             }
     }
 }
 
-typealias NBCollapsableDidToggle = () -> Void
-public struct NBCollapsable<Content>: View where Content: View {
+typealias NBCollapsibleDidToggle = () -> Void
+public struct NBCollapsible<Content>: View where Content: View {
     @Environment(\.nbTheme) var theme: NBTheme
 
-    typealias CollapsableDidToggle = () -> Void
+    typealias CollapsibleDidToggle = () -> Void
 
     @Binding var isExpanded: Bool
     let content: Content
@@ -58,8 +58,8 @@ public struct NBCollapsable<Content>: View where Content: View {
     public var body: some View {
         VStack(spacing: theme.smspacing) {
             content
-                .environment(\.nbCollapsableIsExpanded, isExpanded)
-                .environment(\.nbCollapsableDidToggle) { isExpanded.toggle() }
+                .environment(\.nbCollapsibleIsExpanded, isExpanded)
+                .environment(\.nbCollapsibleDidToggle) { isExpanded.toggle() }
         }
     }
 }
@@ -69,7 +69,7 @@ public struct NBCollapsable<Content>: View where Content: View {
     @Previewable @State var isExapanded = true
 
     VStack {
-        NBCollapsable(isExpanded: $isExapanded) {
+        NBCollapsible(isExpanded: $isExapanded) {
             NBFlatCard {
                 HStack {
                     Text("Some")
@@ -84,7 +84,7 @@ public struct NBCollapsable<Content>: View where Content: View {
                 Text("another card")
             }
 
-            NBCollapsableContent {
+            NBCollapsibleContent {
                 NBFlatCard(type: .default) {
                     Text("Content")
                     Text("Content")

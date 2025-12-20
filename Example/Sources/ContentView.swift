@@ -1,7 +1,13 @@
 import NeoBrutalism
 import SwiftUI
 
-struct AccordianExampleView: View {
+struct ThemeOption: Identifiable {
+    let id = UUID()
+    let name: String
+    let theme: NBTheme
+}
+
+struct AccordionExampleView: View {
     var body: some View {
         NBAccordion {
             Text("Piertotum Locomotor")
@@ -272,7 +278,7 @@ struct TabsExampleView: View {
     }
 }
 
-struct CollapsableExampleView: View {
+struct CollapsibleExampleView: View {
     @State private var isExpanded: Bool = false
 
     var body: some View {
@@ -280,7 +286,7 @@ struct CollapsableExampleView: View {
             Text("Room of Requirement")
                 .font(.title)
 
-            NBCollapsable(isExpanded: $isExpanded) {
+            NBCollapsible(isExpanded: $isExpanded) {
                 NBFlatCard {
                     HStack {
                         Text("Need something?")
@@ -290,7 +296,7 @@ struct CollapsableExampleView: View {
                         }
                     }
                 }
-                NBCollapsableContent {
+                NBCollapsibleContent {
                     NBFlatCard(type: .neutral) {
                         Text("Here’s what you need!")
                     }
@@ -345,25 +351,31 @@ struct FlatCardExampleView: View {
 
 struct ContentView: View {
     @State var colorSceme: ColorScheme = .light
-    @State var theme = NBTheme.default.updateBy(
-        main: Color(light: .rgb(1.0, 0.42, 0.42), dark: .rgb(1.0, 0.42, 0.42)),
-        bw: Color(light: .rgb(1.0, 1.0, 1.0), dark: .rgb(0.129, 0.129, 0.129)),
-        background: Color(light: .rgb(0.988, 0.843, 0.843), dark: .rgb(0.153, 0.161, 0.2))
-    )
-
-//    var body: some View {
-//        ZStack {
-//            theme.background
-//                            .ignoresSafeArea()
-//            TodoAppView()
-//        }
-//        .nbTheme(NBTheme.sunnyPeach)
-//        .colorScheme(colorSceme)
-//    }
+    @State var theme: NBTheme = .red
+    
+    let themes: [ThemeOption] = [
+        ThemeOption(name: "Red", theme: .red),
+        ThemeOption(name: "Orange", theme: .orange),
+        ThemeOption(name: "Amber", theme: .amber),
+        ThemeOption(name: "Yellow", theme: .yellow),
+        ThemeOption(name: "Lime", theme: .lime),
+        ThemeOption(name: "Green", theme: .green),
+        ThemeOption(name: "Emerald", theme: .emerald),
+        ThemeOption(name: "Teal", theme: .teal),
+        ThemeOption(name: "Cyan", theme: .cyan),
+        ThemeOption(name: "Sky", theme: .sky),
+        ThemeOption(name: "Blue", theme: .blue),
+        ThemeOption(name: "Indigo", theme: .indigo),
+        ThemeOption(name: "Violet", theme: .violet),
+        ThemeOption(name: "Purple", theme: .purple),
+        ThemeOption(name: "Fuchsia", theme: .fuchsia),
+        ThemeOption(name: "Pink", theme: .pink),
+        ThemeOption(name: "Rose", theme: .rose)
+    ]
 
     var body: some View {
         let exampleViews: [AnyView] = [
-            AnyView(AccordianExampleView()),
+            AnyView(AccordionExampleView()),
             AnyView(CheckboxExampleView()),
             AnyView(SwitchExampleView()),
             AnyView(AlertExampleView()),
@@ -377,7 +389,7 @@ struct ContentView: View {
             AnyView(RoundSkeletonExampleView()),
             AnyView(TextSkeletonExampleView()),
             AnyView(TabsExampleView()),
-            AnyView(CollapsableExampleView()),
+            AnyView(CollapsibleExampleView()),
             AnyView(DrawerExampleView()),
             AnyView(FlatCardExampleView()),
         ]
@@ -399,6 +411,30 @@ struct ContentView: View {
                             Image(systemName: colorSceme == .light ? "moon" : "sun.max")
                         }.buttonStyle(.neoBrutalism(type: .neutral))
                     }
+                    
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 12) {
+                            ForEach(themes) { option in
+                                Button {
+                                    withAnimation {
+                                        theme = option.theme
+                                    }
+                                } label: {
+                                    Circle()
+                                        .fill(option.theme.main)
+                                        .frame(width: 32, height: 32)
+                                        .overlay(
+                                            Circle()
+                                                .strokeBorder(theme.text, lineWidth: 2)
+                                                .opacity(theme.main == option.theme.main ? 1 : 0)
+                                        )
+                                        .nbBox(elevated: false)
+                                }
+                            }
+                        }
+                        .padding(.vertical, 4)
+                        .padding(.horizontal, 2)
+                    }
 
                     ForEach(0 ..< exampleViews.count, id: \.self) { index in
                         NBCard(type: .neutral) {
@@ -410,9 +446,12 @@ struct ContentView: View {
         }
         .nbTheme(theme)
         .colorScheme(colorSceme)
+        .animation(.default, value: theme.main)
     }
 }
 
 #Preview {
+    //BadgeExampleView()
     ContentView()
 }
+

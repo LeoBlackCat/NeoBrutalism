@@ -291,7 +291,7 @@ struct TabsExampleView: View {
 }
 ```
 
-### Collapsable
+### Collapsible
 
 <p>
     <img width="350" alt="image" src="https://github.com/user-attachments/assets/3227440a-06bc-4631-a6fc-bbdc223d9739" loading="lazy" />
@@ -299,7 +299,7 @@ struct TabsExampleView: View {
 </p>
 
 ```swift
-NBCollapsable(isExpanded: $isExpanded) {
+NBCollapsible(isExpanded: $isExpanded) {
     NBFlatCard {
         HStack {
             Text("Need something?")
@@ -309,7 +309,7 @@ NBCollapsable(isExpanded: $isExpanded) {
             }
         }
     }
-    NBCollapsableContent {
+    NBCollapsibleContent {
         NBFlatCard(type: .neutral) {
             Text("Here’s what you need!")
         }
