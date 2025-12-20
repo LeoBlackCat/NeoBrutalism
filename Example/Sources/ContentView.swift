@@ -387,6 +387,17 @@ struct ToastExampleView: View {
     }
 }
 
+struct DialogExampleView: View {
+    @Binding var showDialog: Bool
+    
+    var body: some View {
+        Button("Show Dialog") {
+            withAnimation { showDialog = true }
+        }
+        .buttonStyle(.neoBrutalism())
+    }
+}
+
 struct SheetExampleView: View {
     @Binding var showSheet: Bool
     @Binding var side: NBSheetSide
@@ -418,6 +429,9 @@ struct ContentView: View {
     @State var showSheet = false
     @State var sheetSide: NBSheetSide = .right
     
+    // Dialog State
+    @State var showDialog = false
+    
     let themes: [ThemeOption] = [
         ThemeOption(name: "Red", theme: .red),
         ThemeOption(name: "Orange", theme: .orange),
@@ -444,6 +458,7 @@ struct ContentView: View {
             AnyView(AvatarExampleView()),
             AnyView(ToastExampleView(toastManager: toastManager)),
             AnyView(SheetExampleView(showSheet: $showSheet, side: $sheetSide)),
+            AnyView(DialogExampleView(showDialog: $showDialog)),
             AnyView(CheckboxExampleView()),
             AnyView(SwitchExampleView()),
             AnyView(AlertExampleView()),
@@ -510,6 +525,24 @@ struct ContentView: View {
                         }
                     }
                 }.padding(theme.padding)
+            }
+        }
+        .nbDialog(isPresented: $showDialog) {
+            NBDialogHeader {
+                NBDialogTitle("Are you sure?")
+                NBDialogDescription("This action cannot be undone. This will permanently delete your account.")
+            }
+            
+            NBDialogFooter {
+                Button("Cancel") {
+                    withAnimation { showDialog = false }
+                }
+                .buttonStyle(.neoBrutalism(type: .neutral))
+                
+                Button("Delete") {
+                    withAnimation { showDialog = false }
+                }
+                .buttonStyle(.neoBrutalism(variant: .reverse))
             }
         }
         .nbSheet(isPresented: $showSheet, side: sheetSide) {

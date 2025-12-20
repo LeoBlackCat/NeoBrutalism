@@ -158,6 +158,34 @@ ZStack {
 }
 ```
 
+### Dialog
+<p float="left">
+    <!-- Insert Dialog screenshot here -->
+    <img width="350" alt="Dialog Component" src="placeholder_dialog.png" loading="lazy" />
+</p>
+
+```swift
+@State var showDialog = false
+
+ZStack {
+    // Content
+}
+.nbDialog(isPresented: $showDialog) {
+    NBDialogHeader {
+        NBDialogTitle("Are you sure?")
+        NBDialogDescription("This action cannot be undone.")
+    }
+    
+    NBDialogFooter {
+        Button("Cancel") { showDialog = false }
+            .buttonStyle(.neoBrutalism(type: .neutral))
+        
+        Button("Delete") { showDialog = false }
+            .buttonStyle(.neoBrutalism(variant: .reverse))
+    }
+}
+```
+
 ### Checkbox
 <p float="left">
     <img width="350" alt="image" src="https://github.com/user-attachments/assets/0239f56e-c375-4e3b-9c04-05788350e266" loading="lazy" />
