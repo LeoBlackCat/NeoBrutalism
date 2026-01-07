@@ -89,7 +89,7 @@ public struct NBTheme: Sendable {
         ),
         mainText: Color(
             light: .rgb(0.0, 0.0, 0.0),
-            dark: .rgb(0.0, 0.0, 0.0)
+            dark: .rgb(1.0, 1.0, 1.0)
         ),
         smsize: 8.0, size: 16.0, xlsize: 24.0,
         smpadding: 8.0, padding: 12.0, xlpadding: 24.0,
